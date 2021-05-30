@@ -1,0 +1,9 @@
+{
+	"name": "adf-nakul-bansal-01",
+	"location": "northeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a5fda8b5-0a7b-4c49-821f-0ece8ac61a4c",
+		"tenantId": "c6d7fca9-e585-4185-92c9-cb65deab17b0"
+	}
+}
