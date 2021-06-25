@@ -4,6 +4,7 @@
 		"activities": [
 			{
 				"name": "CopyCSVToParquet",
+				"description": "This is the copy activity",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
