@@ -1,5 +1,13 @@
 {
 	"name": "adf-glorious-dev",
+	"properties": {
+		"globalParameters": {
+			"input_container": {
+				"type": "string",
+				"value": "input"
+			}
+		}
+	},
 	"location": "westeurope",
 	"identity": {
 		"type": "SystemAssigned",
