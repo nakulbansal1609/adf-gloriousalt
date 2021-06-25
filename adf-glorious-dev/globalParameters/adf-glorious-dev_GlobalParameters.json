@@ -1,1 +1,10 @@
-{}
+{
+	"input_container": {
+		"type": "string",
+		"value": "input"
+	},
+	"output_container": {
+		"type": "string",
+		"value": "output"
+	}
+}
