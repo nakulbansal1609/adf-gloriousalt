@@ -1,0 +1,9 @@
+{
+	"name": "adf-glorious-dev",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2b6ac911-e861-4159-89bd-9d5ae703de55",
+		"tenantId": "c6d7fca9-e585-4185-92c9-cb65deab17b0"
+	}
+}
