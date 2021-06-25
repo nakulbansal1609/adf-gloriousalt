@@ -15,22 +15,6 @@
 			"type": "string",
 			"defaultValue": "https://adlsgloriousdev.dfs.core.windows.net"
 		},
-		"dataFactory_properties_globalParameters_input_container_value": {
-			"type": "string",
-			"defaultValue": "input"
-		},
-		"dataFactory_properties_globalParameters_output_container_value": {
-			"type": "string",
-			"defaultValue": "output"
-		},
-		"dataFactory_location": {
-			"type": "string",
-			"defaultValue": "westeurope"
-		},
-		"dataFactory_identity_type": {
-			"type": "string",
-			"defaultValue": "SystemAssigned"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -60,18 +44,6 @@
 					},
 					"AzureDataLakeStorage1_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
-					},
-					"dataFactory_properties_globalParameters_input_container_value": {
-						"value": "[parameters('dataFactory_properties_globalParameters_input_container_value')]"
-					},
-					"dataFactory_properties_globalParameters_output_container_value": {
-						"value": "[parameters('dataFactory_properties_globalParameters_output_container_value')]"
-					},
-					"dataFactory_location": {
-						"value": "[parameters('dataFactory_location')]"
-					},
-					"dataFactory_identity_type": {
-						"value": "[parameters('dataFactory_identity_type')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"

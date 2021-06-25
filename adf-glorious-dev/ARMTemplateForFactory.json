@@ -14,22 +14,6 @@
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsgloriousdev.dfs.core.windows.net"
-		},
-		"dataFactory_properties_globalParameters_input_container_value": {
-			"type": "string",
-			"defaultValue": "input"
-		},
-		"dataFactory_properties_globalParameters_output_container_value": {
-			"type": "string",
-			"defaultValue": "output"
-		},
-		"dataFactory_location": {
-			"type": "string",
-			"defaultValue": "westeurope"
-		},
-		"dataFactory_identity_type": {
-			"type": "string",
-			"defaultValue": "SystemAssigned"
 		}
 	},
 	"variables": {
@@ -110,7 +94,6 @@
 				"lastPublishTime": "2021-06-25T17:55:51Z"
 			},
 			"dependsOn": [
-				"[variables('factoryId')]",
 				"[concat(variables('factoryId'), '/datasets/input_dataset')]",
 				"[concat(variables('factoryId'), '/datasets/output_dataset')]"
 			]
@@ -143,7 +126,6 @@
 				"schema": []
 			},
 			"dependsOn": [
-				"[variables('factoryId')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
 			]
 		},
@@ -172,7 +154,6 @@
 				"schema": []
 			},
 			"dependsOn": [
-				"[variables('factoryId')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
 			]
 		},
@@ -191,31 +172,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[variables('factoryId')]"
-			]
-		},
-		{
-			"name": "[parameters('factoryName')]",
-			"type": "Microsoft.DataFactory/factories",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"globalParameters": {
-					"input_container": {
-						"type": "string",
-						"value": "[parameters('dataFactory_properties_globalParameters_input_container_value')]"
-					},
-					"output_container": {
-						"type": "string",
-						"value": "[parameters('dataFactory_properties_globalParameters_output_container_value')]"
-					}
-				}
-			},
-			"dependsOn": [],
-			"location": "[parameters('dataFactory_location')]",
-			"identity": {
-				"type": "[parameters('dataFactory_identity_type')]"
-			}
+			"dependsOn": []
 		}
 	]
 }
