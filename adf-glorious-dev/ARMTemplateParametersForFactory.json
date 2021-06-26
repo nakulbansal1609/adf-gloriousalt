@@ -7,6 +7,18 @@
 		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://adlsgloriousdev.dfs.core.windows.net"
+		},
+		"dataFactory_properties_globalParameters_input_container_value": {
+			"value": "input"
+		},
+		"dataFactory_properties_globalParameters_output_container_value": {
+			"value": "output"
+		},
+		"dataFactory_location": {
+			"value": "westeurope"
+		},
+		"dataFactory_identity_type": {
+			"value": "SystemAssigned"
 		}
 	}
 }
