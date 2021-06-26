@@ -5,10 +5,7 @@
 		"factoryName": {
 			"value": "adf-glorious-dev"
 		},
-		"AzureDataLakeStorage1_accountKey": {
-			"value": ""
-		},
-		"AzureDataLakeStorage1_properties_typeProperties_url": {
+		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://adlsgloriousdev.dfs.core.windows.net"
 		}
 	}
