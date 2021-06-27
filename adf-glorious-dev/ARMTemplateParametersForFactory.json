@@ -1,24 +1,24 @@
 {
-	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
-	"contentVersion": "1.0.0.0",
-	"parameters": {
-		"factoryName": {
-			"value": "adf-glorious-dev"
-		},
-		"AzureDataLakeStorage_properties_typeProperties_url": {
-			"value": "https://adlsgloriousdev.dfs.core.windows.net"
-		},
-		"dataFactory_properties_globalParameters_input_container_value": {
-			"value": "input"
-		},
-		"dataFactory_properties_globalParameters_output_container_value": {
-			"value": "output"
-		},
-		"dataFactory_location": {
-			"value": "westeurope"
-		},
-		"dataFactory_identity_type": {
-			"value": "SystemAssigned"
-		}
-	}
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "value": "adf-glorious-dev"
+        },
+        "AzureDataLakeStorage_properties_typeProperties_url": {
+            "value": "https://adlsgloriousdev.dfs.core.windows.net"
+        },
+        "dataFactory_properties_globalParameters_input_container_value": {
+            "value": "input"
+        },
+        "dataFactory_properties_globalParameters_output_container_value": {
+            "value": "output"
+        },
+        "dataFactory_location": {
+            "value": "westeurope"
+        },
+        "dataFactory_identity_type": {
+            "value": "SystemAssigned"
+        }
+    }
 }
