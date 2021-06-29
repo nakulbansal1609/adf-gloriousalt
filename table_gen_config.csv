@@ -1,0 +1,45 @@
+﻿Table,PK,PK_Type,Exclude_Cols
+BI_Kampanj_Data_AktInfo,AktNr,int,"KmpID, GldNr"
+BI_Kampanj_Spc,KmpID,int,
+lin_UCR,AktNr,int,
+LinKundNr,KundNr,int,Orgsys
+ncGrupp,Namn,int_base64,
+ncUser,LoginName,int_base64,
+niAkt,AktNr,int,
+niAktGld,AktNr,int,GldNr
+niAmoDat,GldNr,int,AmortNr
+niAtgInf,StegNr,int,
+niAtgTdo,ÅtgärdsNr,int,
+niAtgTrd,TrädNamn,int_base64,
+niAtgVal,ResponsNamn,int_base64,
+niAvsKod,AvsKod,int_base64,UnderKod
+niAvtDat,AvdNr,int,"ObjNr, ObjTyp, Namn, ProductCode"
+niAvtDat2,AvdNr,int,"ObjNr, ObjTyp, Namn, ProductCode"
+niAvtKst,AvdNr,int,"ObjNr, ObjTyp, AvtalsNamn, Handl"
+niGdAdr,AdrNr,int,
+niGdMain,GldNr,int,
+niGdPriv,GldNr,int,
+niGldDbo,GldNr,int,
+niGldKk,GldNr,int,
+niGldSk,LänkNr,int,
+niHist,HistNr,int,
+niInbDat,InbetNr,int,
+niInbSpc,InbetNr,int,SpecNr
+niKlient,KliNr,int,AvdNr
+niKlikst,KstNr,int,
+niKliRed,RedovisNr,int,
+niKstDef,KstNamn,int_base64,Landskod
+niMessage,MessageID,int,
+niPartnr,PartnerNr,int,PartnerAvdNr
+niSakDat,SäkNr,int,
+niSkFakt,SkuldNr,int,SekvNr
+niSkKrfa,SkuldNr,int,SekvNr
+niSkMain,SkuldNr,int,
+niSkusan,GldNr,int,
+niSupDat,SessionNo,int,
+niSupSpc,SessionNo,int,"SpecNr, GldNr, AktNr"
+niTrsDat,TransNr,int,
+niUTM,UTMNr,int,
+niVarDat,Id,int,
+niVarInf,Namn,int_base64,ObjTyp
+niVSDat,VSNr,int,
