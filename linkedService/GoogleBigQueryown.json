@@ -1,0 +1,19 @@
+{
+	"name": "GoogleBigQueryown",
+	"properties": {
+		"annotations": [],
+		"type": "GoogleBigQuery",
+		"typeProperties": {
+			"project": "gentle-shell-248708",
+			"requestGoogleDriveScope": false,
+			"authenticationType": "ServiceAuthentication",
+			"email": "azuredatafactory@gentle-shell-248708.iam.gserviceaccount.com",
+			"keyFilePath": "C:\\connections\\bigquery\\gentle-shell-248708-05b0f68a30ab.json",
+			"useSystemTrustStore": false
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
