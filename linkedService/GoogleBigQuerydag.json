@@ -1,0 +1,19 @@
+{
+	"name": "GoogleBigQuerydag",
+	"properties": {
+		"annotations": [],
+		"type": "GoogleBigQuery",
+		"typeProperties": {
+			"project": "dagmar-datacron-prod",
+			"requestGoogleDriveScope": false,
+			"authenticationType": "ServiceAuthentication",
+			"email": "service-kesko@dagmar-datacron-prod.iam.gserviceaccount.com",
+			"keyFilePath": "C:\\connections\\bigquery\\dagmar-datacron-prod-0c6546d1fe9c.json",
+			"useSystemTrustStore": false
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
