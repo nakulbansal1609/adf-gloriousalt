@@ -4,10 +4,10 @@
 		"annotations": [],
 		"type": "GoogleBigQuery",
 		"typeProperties": {
-			"project": "dagmar-datacron-prod",
+			"project": "kesko-sandbox",
 			"requestGoogleDriveScope": false,
 			"authenticationType": "ServiceAuthentication",
-			"email": "service-kesko@dagmar-datacron-prod.iam.gserviceaccount.com",
+			"email": "sandbox-snowflake@kesko-sandbox.iam.gserviceaccount.com",
 			"keyFilePath": "C:\\connections\\bigquery\\dagmar-datacron-prod-0c6546d1fe9c.json",
 			"useSystemTrustStore": false
 		},
