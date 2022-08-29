@@ -1,0 +1,15 @@
+{
+	"name": "GoogleBigQueryObject1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "GoogleBigQuerydag",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "GoogleBigQueryObject",
+		"schema": [],
+		"typeProperties": {
+			"dataset": "prod_kesko_mart.monthly_report"
+		}
+	}
+}
