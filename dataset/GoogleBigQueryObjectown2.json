@@ -1,0 +1,12 @@
+{
+	"name": "GoogleBigQueryObjectown2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "GoogleBigQueryown2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "GoogleBigQueryObject",
+		"schema": []
+	}
+}
