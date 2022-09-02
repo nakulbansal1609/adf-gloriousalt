@@ -1,0 +1,54 @@
+{
+	"name": "pipeline_own2",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "GoogleBigQuerySource",
+						"query": "SELECT name FROM bigquery-public-data.usa_names.usa_1910_2013 WHERE state = 'TX' LIMIT 100"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "GoogleBigQueryObjectown2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Output_csv",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "bqusacodesname2.csv"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
