@@ -33,7 +33,10 @@
 				"inputs": [
 					{
 						"referenceName": "GoogleBigQueryObjectdag",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "\"\""
+						}
 					}
 				],
 				"outputs": [
