@@ -1,15 +1,23 @@
 {
-	"name": "GoogleBigQueryObject1",
+	"name": "GoogleBigQueryObjectdag",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "GoogleBigQuerydag",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"tablename": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "GoogleBigQueryObject",
 		"schema": [],
 		"typeProperties": {
-			"dataset": ""
+			"dataset": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			}
 		}
 	}
 }
