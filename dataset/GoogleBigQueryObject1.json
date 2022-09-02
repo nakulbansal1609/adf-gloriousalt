@@ -9,7 +9,7 @@
 		"type": "GoogleBigQueryObject",
 		"schema": [],
 		"typeProperties": {
-			"dataset": "prod_kesko_mart.monthly_report"
+			"dataset": ""
 		}
 	}
 }
