@@ -5,6 +5,11 @@
 			"referenceName": "AzureDataLakeStorage",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Glorious"
 		},
@@ -13,7 +18,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "bqfile.parquet",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
 				"fileSystem": "output"
 			},
 			"compressionCodec": "none"
