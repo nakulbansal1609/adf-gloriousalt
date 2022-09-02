@@ -16,7 +16,17 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "GoogleBigQuerySource"
+						"type": "GoogleBigQuerySource",
+						"query": "SELECT * FROM dagmar-datacron-prod.prod_kesko_mart.monthly_report "
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
 					},
 					"enableStaging": false
 				},
@@ -24,6 +34,15 @@
 					{
 						"referenceName": "GoogleBigQueryObjectdag",
 						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "output_dataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "dagout1.parquet"
+						}
 					}
 				]
 			}
