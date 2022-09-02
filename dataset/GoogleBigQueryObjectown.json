@@ -1,15 +1,23 @@
 {
-	"name": "GoogleBigQueryObject2",
+	"name": "GoogleBigQueryObjectown",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "GoogleBigQuerydag",
+			"referenceName": "GoogleBigQueryown",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tablename": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "GoogleBigQueryObject",
 		"schema": [],
 		"typeProperties": {
-			"dataset": "dagmar-datacron-prod",
+			"dataset": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			},
 			"table": "prod_kesko_mart.monthly_report"
 		}
 	}
