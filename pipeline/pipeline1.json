@@ -17,17 +17,15 @@
 				"typeProperties": {
 					"source": {
 						"type": "GoogleBigQuerySource",
-						"query": "SELECT * FROM dagmar-datacron-prod.prod_kesko_mart.monthly_report"
+						"query": "SELECT * FROM dagmar-datacron-prod.prod_kesko_mart.monthly_report\nlimit 100"
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
 					"enableStaging": false
@@ -43,10 +41,10 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Output_csv",
+						"referenceName": "output_dataset",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "dagcsvalldata.csv"
+							"filename": "dagparq.parquet"
 						}
 					}
 				]
