@@ -1,0 +1,208 @@
+{
+	"name": "Output_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"fileSystem": "output"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "id",
+				"type": "String"
+			},
+			{
+				"name": "Worker",
+				"type": "String"
+			},
+			{
+				"name": "Worker Type",
+				"type": "String"
+			},
+			{
+				"name": "Worker Ref",
+				"type": "String"
+			},
+			{
+				"name": "Worker Ext Ref",
+				"type": "String"
+			},
+			{
+				"name": "Ltd Tax Code",
+				"type": "String"
+			},
+			{
+				"name": "Ltd Company Name",
+				"type": "String"
+			},
+			{
+				"name": "Worker Invoice Period",
+				"type": "String"
+			},
+			{
+				"name": "Timesheet Start",
+				"type": "String"
+			},
+			{
+				"name": "Payroll/Frequency",
+				"type": "String"
+			},
+			{
+				"name": "Provider",
+				"type": "String"
+			},
+			{
+				"name": "Consultant",
+				"type": "String"
+			},
+			{
+				"name": "Description",
+				"type": "String"
+			},
+			{
+				"name": "Client",
+				"type": "String"
+			},
+			{
+				"name": "Manager",
+				"type": "String"
+			},
+			{
+				"name": "Placement",
+				"type": "String"
+			},
+			{
+				"name": "PO Number",
+				"type": "String"
+			},
+			{
+				"name": "Placement Start",
+				"type": "String"
+			},
+			{
+				"name": "Placement End",
+				"type": "String"
+			},
+			{
+				"name": "Freehand Ref",
+				"type": "String"
+			},
+			{
+				"name": "Payroll Ref",
+				"type": "String"
+			},
+			{
+				"name": "Worker First Name",
+				"type": "String"
+			},
+			{
+				"name": "Worker Last Name",
+				"type": "String"
+			},
+			{
+				"name": "Agency Name",
+				"type": "String"
+			},
+			{
+				"name": "Job Title",
+				"type": "String"
+			},
+			{
+				"name": "Job Description",
+				"type": "String"
+			},
+			{
+				"name": "Pending Approvers",
+				"type": "String"
+			},
+			{
+				"name": "Period Ending",
+				"type": "String"
+			},
+			{
+				"name": "Status",
+				"type": "String"
+			},
+			{
+				"name": "Hours",
+				"type": "String"
+			},
+			{
+				"name": "Chargeable Hours",
+				"type": "String"
+			},
+			{
+				"name": "Payable Hours",
+				"type": "String"
+			},
+			{
+				"name": "Units",
+				"type": "String"
+			},
+			{
+				"name": "Chargeable Units",
+				"type": "String"
+			},
+			{
+				"name": "Payable Units",
+				"type": "String"
+			},
+			{
+				"name": "Pay",
+				"type": "String"
+			},
+			{
+				"name": "Pay Currency",
+				"type": "String"
+			},
+			{
+				"name": "Purchase Invoices",
+				"type": "String"
+			},
+			{
+				"name": "Last Purchase Invoice Date",
+				"type": "String"
+			},
+			{
+				"name": "Paper",
+				"type": "String"
+			},
+			{
+				"name": "Record Status",
+				"type": "String"
+			},
+			{
+				"name": "Sales Project",
+				"type": "String"
+			},
+			{
+				"name": "Hours Worked",
+				"type": "String"
+			},
+			{
+				"name": "Paid Date",
+				"type": "String"
+			}
+		]
+	}
+}
