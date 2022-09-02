@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "GoogleBigQuerySource",
-						"query": "SELECT * FROM dagmar-datacron-prod.prod_kesko_mart.monthly_report\nlimit 100"
+						"query": "SELECT * FROM dagmar-datacron-prod.prod_kesko_mart.monthly_report\n"
 					},
 					"sink": {
 						"type": "ParquetSink",
