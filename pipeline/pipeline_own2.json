@@ -17,15 +17,17 @@
 				"typeProperties": {
 					"source": {
 						"type": "GoogleBigQuerySource",
-						"query": "SELECT name FROM bigquery-public-data.usa_names.usa_1910_2013 WHERE state = 'TX' LIMIT 100"
+						"query": "SELECT * FROM bigquery-public-data.usa_names.usa_1910_2013"
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false
@@ -38,10 +40,10 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "output_dataset",
+						"referenceName": "Output_csv",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "bqusname.parquet"
+							"filename": "bigusadata.csv"
 						}
 					}
 				]
