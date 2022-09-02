@@ -22,7 +22,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "GoogleBigQueryObject1",
+						"referenceName": "GoogleBigQueryObjectdag",
 						"type": "DatasetReference"
 					}
 				]
