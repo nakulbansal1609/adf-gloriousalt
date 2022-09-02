@@ -20,12 +20,14 @@
 						"query": "SELECT * FROM dagmar-datacron-prod.prod_kesko_mart.monthly_report"
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false
@@ -41,10 +43,10 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "output_dataset",
+						"referenceName": "Output_csv",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "dagparq.parquet"
+							"filename": "dagcsvalldata.csv"
 						}
 					}
 				]
