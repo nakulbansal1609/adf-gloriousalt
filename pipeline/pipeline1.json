@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "GoogleBigQuerySource",
-						"query": "SELECT * FROM dagmar-datacron-prod.prod_kesko_mart.monthly_report\n"
+						"query": "SELECT * FROM dagmar-datacron-prod.prod_kesko_mart.monthly_report WHERE MediaDate > '2019-12-31'"
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
