@@ -1,0 +1,57 @@
+{
+	"name": "pipeline1_copy1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "GoogleBigQuerySource",
+						"query": "SELECT * FROM bigquery-public-data.usa_names.usa_1910_2013"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "GoogleBigQueryObjectdag",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "\"\""
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Output_csv",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "dagcsv5.csv"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
