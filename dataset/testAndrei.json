@@ -1,0 +1,20 @@
+{
+	"name": "testAndrei",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlalwcaelumdevdw01",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "test_andrei",
+				"fileSystem": "fs01-dlalwcaelumdevdw01"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

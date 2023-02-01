@@ -1,0 +1,23 @@
+{
+	"name": "testSynapse",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "synwlwcaelumdevdw_private",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"database_name": "synlwcaelumdevdwsql"
+			}
+		},
+		"folder": {
+			"name": "Testing_Datasets"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "test_table"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

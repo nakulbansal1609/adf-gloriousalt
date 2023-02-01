@@ -1,0 +1,25 @@
+{
+	"name": "testingMetadata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlalwcaelumdevdw01",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Testing_Datasets"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "configs.parquet",
+				"folderPath": "testing",
+				"fileSystem": "fs01-dlalwcaelumdevdw01"
+			},
+			"compressionCodec": "none"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

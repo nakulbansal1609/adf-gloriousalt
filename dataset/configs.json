@@ -1,0 +1,28 @@
+{
+	"name": "configs",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dlalwcaelumdevdw01",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Testing_Datasets"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "ubwSchemas.csv",
+				"folderPath": "testing/schemas",
+				"fileSystem": "fs01-dlalwcaelumdevdw01"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

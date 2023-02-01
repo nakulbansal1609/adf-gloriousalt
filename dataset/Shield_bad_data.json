@@ -1,0 +1,34 @@
+{
+	"name": "Shield_bad_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "synwlwcaelumdevdw_private",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"database_name": "synlwcaelumdevdwsql"
+			}
+		},
+		"parameters": {
+			"TABLE_NAME": {
+				"type": "string"
+			},
+			"zone": {
+				"type": "string"
+			},
+			"shield_db_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "bad_data",
+			"table": {
+				"value": "@concat(toUpper(dataset().zone),'_',dataset().TABLE_NAME,'_bad')",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

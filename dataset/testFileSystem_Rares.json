@@ -1,0 +1,21 @@
+{
+	"name": "testFileSystem_Rares",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileServer_TestRares",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

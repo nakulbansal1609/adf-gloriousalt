@@ -1,0 +1,40 @@
+{
+	"name": "parameterizedNOVA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LWSQLDEV075",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"database": "@dataset().database_name"
+			}
+		},
+		"parameters": {
+			"schema": {
+				"type": "string"
+			},
+			"table_name": {
+				"type": "string"
+			},
+			"server_path": {
+				"type": "string"
+			},
+			"database_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

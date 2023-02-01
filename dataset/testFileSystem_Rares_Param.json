@@ -1,0 +1,30 @@
+{
+	"name": "testFileSystem_Rares_Param",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileServer_TestRares",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"FileName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": {
+					"value": "@dataset().FileName",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
