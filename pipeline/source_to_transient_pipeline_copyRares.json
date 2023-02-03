@@ -1,10 +1,9 @@
 {
-	"name": "source_to_transient_pipeline",
+	"name": "source_to_transient_pipeline_copyRares",
 	"properties": {
 		"activities": [
 			{
 				"name": "SourceToTransient",
-				"description": "fdfd",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -30,12 +29,6 @@
 						"dependencyConditions": [
 							"Succeeded"
 						]
-					},
-					{
-						"activity": "LookupSqlQuery",
-						"dependencyConditions": [
-							"Succeeded"
-						]
 					}
 				],
 				"policy": {
@@ -50,7 +43,7 @@
 					"source": {
 						"type": "SqlMISource",
 						"sqlReaderQuery": {
-							"value": "@replace(replace(activity('LookupSqlQuery').output.firstRow.SQL_Query,'MaxTimestamp',activity('GetTableMetadata').output.firstRow.max_timestamp),'SourceTimestamp',activity('GetSourceMaxTimestamp').output.firstRow.timestamp)",
+							"value": "SELECT *\nFROM @{variables('database_name')}.@{variables('database_schema')}.@{pipeline().parameters.table_name}\nWHERE @{activity('GetTableMetadata').output.firstRow.delta_column} BETWEEN \n'@{activity('GetTableMetadata').output.firstRow.max_timestamp}' AND '@{activity('GetSourceMaxTimestamp').output.firstRow.timestamp}'\n",
 							"type": "Expression"
 						},
 						"partitionOption": "None"
@@ -664,87 +657,6 @@
 						"type": "DatasetReference"
 					}
 				}
-			},
-			{
-				"name": "LookupSqlQuery",
-				"type": "Lookup",
-				"dependsOn": [
-					{
-						"activity": "GetTableMetadata",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "SetDatabaseForLoad",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "SetDBShemaForLoad",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderStoredProcedureName": "[dbo].[GetSQLQueryClientExemption]",
-						"storedProcedureParameters": {
-							"DatabaseName": {
-								"type": "String",
-								"value": {
-									"value": "@variables('database_name')",
-									"type": "Expression"
-								}
-							},
-							"DatabaseSchema": {
-								"type": "String",
-								"value": {
-									"value": "@variables('database_schema')",
-									"type": "Expression"
-								}
-							},
-							"DeltaColumn": {
-								"type": "String",
-								"value": {
-									"value": "@{activity('GetTableMetadata').output.firstRow.delta_column}",
-									"type": "Expression"
-								}
-							},
-							"SourceName": {
-								"type": "String",
-								"value": {
-									"value": "@pipeline().parameters.source",
-									"type": "Expression"
-								}
-							},
-							"TableName": {
-								"type": "String",
-								"value": {
-									"value": "@pipeline().parameters.table_name",
-									"type": "Expression"
-								}
-							}
-						},
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "Metastore_tablelist",
-						"type": "DatasetReference"
-					}
-				}
 			}
 		],
 		"parameters": {
@@ -781,7 +693,7 @@
 			}
 		},
 		"folder": {
-			"name": "Caelum_Pipelines/2 transient_to_raw_to_trusted/1 source_to_transient"
+			"name": "Testing_Pipelines"
 		},
 		"annotations": [],
 		"lastPublishTime": "2021-06-14T09:09:15Z"

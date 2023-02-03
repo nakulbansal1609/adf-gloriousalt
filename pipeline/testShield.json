@@ -1,0 +1,105 @@
+{
+	"name": "testShield",
+	"properties": {
+		"activities": [
+			{
+				"name": "EachDQcheck",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "GetQueries",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('GetQueries').output.value",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Stored procedure1",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[shield_db].[test_dqs]",
+								"storedProcedureParameters": {
+									"query1": {
+										"value": {
+											"value": "@item().query1",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"query2": {
+										"value": {
+											"value": "@item().query2",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "synwlwcaelumdevdw_private",
+								"type": "LinkedServiceReference",
+								"parameters": {
+									"database_name": "synlwcaelumdevdwsql"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "GetQueries",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "shieldTesting",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"folder": {
+			"name": "Testing_Pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-06-16T12:53:01Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

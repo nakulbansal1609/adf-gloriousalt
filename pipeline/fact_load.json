@@ -1,18 +1,14 @@
 {
-	"name": "mart_etl",
+	"name": "fact_load",
 	"properties": {
 		"activities": [
 			{
-				"name": "dim_load",
-				"type": "ExecutePipeline",
+				"name": "Wait1",
+				"type": "Wait",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "dim_load",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
+					"waitTimeInSeconds": 1
 				}
 			}
 		],

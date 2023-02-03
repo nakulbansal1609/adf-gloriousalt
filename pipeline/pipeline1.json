@@ -3,11 +3,11 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
-				"type": "Copy",
+				"name": "Web1",
+				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "0.12:00:00",
+					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -15,41 +15,13 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "GoogleBigQuerySource",
-						"query": "SELECT * FROM dagmar-datacron-prod.prod_kesko_mart.monthly_report WHERE MediaDate > '2019-12-31'"
+					"url": "https://app-lw-caelum-dev-dw.azurewebsites.net/caseID?case_id=44&case_id=106&case_id=87",
+					"connectVia": {
+						"referenceName": "shir-lw-caelum-dev-dw-01",
+						"type": "IntegrationRuntimeReference"
 					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "GoogleBigQueryObjectdag",
-						"type": "DatasetReference",
-						"parameters": {
-							"tablename": "\"\""
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Output_csv",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": "dagcsv5.csv"
-						}
-					}
-				]
+					"method": "GET"
+				}
 			}
 		],
 		"annotations": []

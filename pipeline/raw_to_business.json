@@ -84,11 +84,7 @@
 								"value": "@pipeline().parameters.target_table",
 								"type": "Expression"
 							},
-							"SCHEMA_NAME": "dbo",
-							"dw_db_name": {
-								"value": "@pipeline().globalParameters.dw_db_name",
-								"type": "Expression"
-							}
+							"SCHEMA_NAME": "dbo"
 						}
 					},
 					"firstRowOnly": true
@@ -136,24 +132,14 @@
 								"type": "Expression"
 							},
 							"type": "String"
-						},
-						"time_limit_enforce": {
-							"value": {
-								"value": "@pipeline().parameters.time_limit_enforce",
-								"type": "Expression"
-							},
-							"type": "String"
 						}
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "shield_db",
+					"referenceName": "synwlwcaelumdevdw_private",
 					"type": "LinkedServiceReference",
 					"parameters": {
-						"database_name": {
-							"value": "@pipeline().globalParameters.dw_db_name",
-							"type": "Expression"
-						}
+						"database_name": "synlwcaelumdevdwsql"
 					}
 				}
 			}
@@ -161,10 +147,6 @@
 		"parameters": {
 			"target_table": {
 				"type": "string"
-			},
-			"time_limit_enforce": {
-				"type": "string",
-				"defaultValue": "prev_day"
 			}
 		},
 		"folder": {

@@ -39,13 +39,10 @@
 					},
 					"staging": {
 						"linkedService": {
-							"referenceName": "datalake",
+							"referenceName": "dlalwcaelumdevdw01",
 							"type": "LinkedServiceReference"
 						},
-						"folderPath": {
-							"value": "@concat(pipeline().globalParameters.adls_dw_container_name,'/staging')",
-							"type": "Expression"
-						}
+						"folderPath": "fs01-dlalwcaelumdevdw01/staging"
 					},
 					"compute": {
 						"coreCount": 8,
@@ -172,7 +169,7 @@
 					"enableStaging": true,
 					"stagingSettings": {
 						"linkedServiceName": {
-							"referenceName": "datalake",
+							"referenceName": "dlalwcaelumdevdw01",
 							"type": "LinkedServiceReference"
 						},
 						"path": "fs01-dlalwcaelumdevdw01/staging"
@@ -180,7 +177,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "parameterized_source",
+						"referenceName": "parameterizedNOVA",
 						"type": "DatasetReference",
 						"parameters": {
 							"schema": "cdc",
