@@ -17,7 +17,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT m.*, h.HUB_NAME, h.SCHEMA_NAME \nFROM adf_metastore.dv.dv_hub_map m\njoin adf_metastore.dv.dv_hubs h on h.HUB_ID = m.HUB_ID",
+						"sqlReaderQuery": {
+							"value": "SELECT\n\tm.HUB_MAP_ID,\n\tm.SOURCE_TABLE,\n\tm.PK_LIST,\n\tm.RECORD_SOURCE,\n\tm.HUB_ID,\n\tm.active_flg,\n\tm.target_pk_list,\n\th.HUB_NAME,\n\th.SCHEMA_NAME,\n\tCASE \n\t\tWHEN @{pipeline().parameters.load_synapse}=1 THEN REPLACE(SOURCE_SCHEMA, 'EXT_', 'INT_')\n\t\tELSE SOURCE_SCHEMA\n\tEND SOURCE_SCHEMA\nFROM adf_metastore.dv.dv_hub_map m\njoin adf_metastore.dv.dv_hubs h\non h.HUB_ID = m.HUB_ID\nwhere active_flg = 1 ",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -101,7 +104,10 @@
 										"type": "String"
 									},
 									"target_schema": {
-										"value": "@item().SCHEMA_NAME",
+										"value": {
+											"value": "@item().SCHEMA_NAME",
+											"type": "Expression"
+										},
 										"type": "String"
 									},
 									"target_table": {
@@ -114,10 +120,13 @@
 								}
 							},
 							"linkedServiceName": {
-								"referenceName": "synwlwcaelumdevdw_private",
+								"referenceName": "shield_db",
 								"type": "LinkedServiceReference",
 								"parameters": {
-									"database_name": "synlwcaelumdevdwsql"
+									"database_name": {
+										"value": "@pipeline().globalParameters.dw_db_name",
+										"type": "Expression"
+									}
 								}
 							}
 						}
@@ -128,6 +137,10 @@
 		"parameters": {
 			"MasterRunID": {
 				"type": "string"
+			},
+			"load_synapse": {
+				"type": "int",
+				"defaultValue": 0
 			}
 		},
 		"folder": {

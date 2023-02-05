@@ -26,7 +26,11 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"TABLE_NAME": "INFORMATION_SCHEMA.COLUMNS",
-							"SCHEMA_NAME": "dbo"
+							"SCHEMA_NAME": "dbo",
+							"dw_db_name": {
+								"value": "@pipeline().globalParameters.dw_db_name",
+								"type": "Expression"
+							}
 						}
 					},
 					"firstRowOnly": false
@@ -64,7 +68,10 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"notebookPath": "/Repos/caelum/lowell.caelum.cdp.databricks/automation-testing/test_vault",
+								"notebookPath": {
+									"value": "@concat(if(equals(pipeline().globalParameters.environment,'dev'),'/Repos/caelum/lowell.caelum.cdp.databricks/','/caelum/'),'automation-testing/test_vault')\n",
+									"type": "Expression"
+								},
 								"baseParameters": {
 									"table_name": {
 										"value": "@item().TABLE_NAME",
@@ -78,7 +85,7 @@
 								}
 							},
 							"linkedServiceName": {
-								"referenceName": "AzureDatabricks1",
+								"referenceName": "databricks_cs",
 								"type": "LinkedServiceReference"
 							}
 						}

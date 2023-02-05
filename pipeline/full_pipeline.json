@@ -1,7 +1,7 @@
 {
 	"name": "full_pipeline",
 	"properties": {
-		"description": "This is the pipeline to run sql and api based injestion source types.",
+		"description": "This is the pipeline to run sql and api based ingestion source types.",
 		"activities": [
 			{
 				"name": "SetCurrentTimestamp",
@@ -60,6 +60,20 @@
 									"value": "@pipeline().parameters.table_name",
 									"type": "Expression"
 								}
+							},
+							"Env": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().globalParameters.environment",
+									"type": "Expression"
+								}
+							},
+							"catchup": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().parameters.catchup",
+									"type": "Expression"
+								}
 							}
 						},
 						"queryTimeout": "02:00:00",
@@ -76,7 +90,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "SwitchTransientToTrusted",
+						"activity": "TransientToRawToTrusted",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -155,6 +169,10 @@
 											"MasterRunID": {
 												"value": "@pipeline().RunId",
 												"type": "Expression"
+											},
+											"catchup": {
+												"value": "@pipeline().parameters.catchup",
+												"type": "Expression"
 											}
 										}
 									}
@@ -192,6 +210,10 @@
 											"MasterRunID": {
 												"value": "@pipeline().RunId",
 												"type": "Expression"
+											},
+											"catchup": {
+												"value": "@pipeline().parameters.catchup",
+												"type": "Expression"
 											}
 										}
 									}
@@ -228,6 +250,10 @@
 											"table_name": {
 												"value": "@pipeline().parameters.table_name",
 												"type": "Expression"
+											},
+											"catchup": {
+												"value": "@pipeline().parameters.catchup",
+												"type": "Expression"
 											}
 										}
 									}
@@ -263,6 +289,14 @@
 									},
 									"MasterRunID": {
 										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"testing_run_id": {
+										"value": "@pipeline().parameters.iterator_run_id",
+										"type": "Expression"
+									},
+									"catchup": {
+										"value": "@pipeline().parameters.catchup",
 										"type": "Expression"
 									}
 								}
@@ -442,81 +476,11 @@
 				}
 			},
 			{
-				"name": "SwitchTransientToTrusted",
-				"description": "This activity will switch the cases for ingestion type and accordingly will trigger the dataflow activity",
-				"type": "Switch",
-				"dependsOn": [
-					{
-						"activity": "SwitchSourceToTransient",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"on": {
-						"value": "@concat(activity('GetTableMetadata').output.firstRow.injestion_type,' ',activity('GetTableMetadata').output.firstRow.load_type)",
-						"type": "Expression"
-					},
-					"cases": [
-						{
-							"value": "sqljson incremental",
-							"activities": [
-								{
-									"name": "Wait1",
-									"type": "Wait",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"waitTimeInSeconds": 1
-									}
-								}
-							]
-						}
-					],
-					"defaultActivities": [
-						{
-							"name": "TransientToRawToTrusted",
-							"description": "This activity will move data from transient and transform before persisting it on raw/trusted/shield zones respectively",
-							"type": "ExecutePipeline",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"pipeline": {
-									"referenceName": "transient_to_raw_to_trusted",
-									"type": "PipelineReference"
-								},
-								"waitOnCompletion": true,
-								"parameters": {
-									"date": {
-										"value": "@variables('date')",
-										"type": "Expression"
-									},
-									"source": {
-										"value": "@pipeline().parameters.source",
-										"type": "Expression"
-									},
-									"table_name": {
-										"value": "@pipeline().parameters.table_name",
-										"type": "Expression"
-									},
-									"MasterRunID": {
-										"value": "@pipeline().RunId",
-										"type": "Expression"
-									}
-								}
-							}
-						}
-					]
-				}
-			},
-			{
 				"name": "IfSQLJsonPlusHist",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "SwitchTransientToTrusted",
+						"activity": "TransientToRawToTrusted",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -606,12 +570,16 @@
 							"table": {
 								"value": "@pipeline().parameters.table_name",
 								"type": "Expression"
+							},
+							"adls_dw_container_name": {
+								"value": "@pipeline().globalParameters.adls_dw_container_name",
+								"type": "Expression"
 							}
 						}
 					},
 					"logStorageSettings": {
 						"linkedServiceName": {
-							"referenceName": "dlalwcaelumdevdw01",
+							"referenceName": "datalake",
 							"type": "LinkedServiceReference"
 						},
 						"path": "fs01-dlalwcaelumdevdw01/purge_logs/rollbacks"
@@ -639,24 +607,11 @@
 				}
 			},
 			{
-				"name": "TestingParams",
-				"description": "This activity will check the source tablename flag from adf metastore",
+				"name": "IfIncrementalCopyDataToStageSynapse",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "AnonConditional",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "LoopNestedTables",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "IfSQLJsonPlusHist",
+						"activity": "TransientToRawToTrusted",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -665,143 +620,89 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('GetTableMetadata').output.firstRow.src_table_name_flag,true)",
+						"value": "@and(equals(activity('GetTableMetadata').output.firstRow.load_type,'incremental'),equals(pipeline().parameters.load_synapse,'1'))",
 						"type": "Expression"
 					},
-					"ifFalseActivities": [
-						{
-							"name": "TestingParameters2",
-							"type": "Lookup",
-							"dependsOn": [
-								{
-									"activity": "GetSourceMax2",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "SqlMISource",
-									"sqlReaderQuery": {
-										"value": "INSERT INTO [adf_metastore].[tst].[testing_parameters]\nSELECT '@{pipeline().RunId}' as run_id,\n'@{pipeline().parameters.iterator_run_id}' as iterator_run_id,\n'@{pipeline().parameters.table_name}' as table_name,\n'@{pipeline().parameters.source}' as source,\n'@{concat(pipeline().parameters.table_name,'_',formatDateTime(variables('date'),'yyyyMMddhhmmss'),'*.parquet')}' as filename,\n'@{formatDateTime(variables('date'),'dd')}' as day,\n'@{formatDateTime(variables('date'),'MM')}' as month,\n'@{formatDateTime(variables('date'),'yyyy')}' as year,\n'@{pipeline().parameters.testing}' as testing_flg,\n(SELECT aggregate_key from tst.configs\nwhere TABLE_NAME = '@{pipeline().parameters.table_name}') as aggregateKey,\n'@{activity('GetSourceMax2').output.firstRow.timestamp}' as source_max,\n'@{activity('GetTableMetadata').output.firstRow.max_timestamp}' as current_max,\n'@{activity('GetTableMetadata').output.firstRow.system_db_schema}' as system_db_schema\n;\nSELECT * FROM [adf_metastore].[tst].[testing_parameters]\nWHERE run_id='@{pipeline().RunId}'\n",
-										"type": "Expression"
-									},
-									"partitionOption": "None"
-								},
-								"dataset": {
-									"referenceName": "Metastore",
-									"type": "DatasetReference",
-									"parameters": {
-										"table_name": "pipeline_log"
-									}
-								}
-							}
-						},
-						{
-							"name": "GetSourceMax2",
-							"type": "Lookup",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "SqlServerSource",
-									"sqlReaderQuery": {
-										"value": "SELECT COALESCE(max(@{activity('GetTableMetadata').output.firstRow.delta_column}), '@{activity('GetTableMetadata').output.firstRow.max_timestamp}' ) timestamp\nFROM @{activity('GetTableMetadata').output.firstRow.system_db}.@{activity('GetTableMetadata').output.firstRow.system_db_schema}.@{pipeline().parameters.table_name}",
-										"type": "Expression"
-									},
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
-								},
-								"dataset": {
-									"referenceName": "testSqlServer",
-									"type": "DatasetReference"
-								}
-							}
-						}
-					],
 					"ifTrueActivities": [
 						{
-							"name": "TestingParameters1",
-							"type": "Lookup",
-							"dependsOn": [
-								{
-									"activity": "GetSourceMax1",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "SqlMISource",
-									"sqlReaderQuery": {
-										"value": "INSERT INTO [adf_metastore].[tst].[testing_parameters]\nSELECT '@{pipeline().RunId}' as run_id,\n'@{pipeline().parameters.iterator_run_id}' as iterator_run_id,\n'@{pipeline().parameters.table_name}' as table_name,\n'@{pipeline().parameters.source}' as source,\n'@{concat(pipeline().parameters.table_name,'_',formatDateTime(variables('date'),'yyyyMMddhhmmss'),'*.parquet')}' as filename,\n'@{formatDateTime(variables('date'),'dd')}' as day,\n'@{formatDateTime(variables('date'),'MM')}' as month,\n'@{formatDateTime(variables('date'),'yyyy')}' as year,\n'@{pipeline().parameters.testing}' as testing_flg,\n(SELECT aggregate_key from tst.configs\nwhere TABLE_NAME = '@{pipeline().parameters.table_name}') as aggregateKey,\n'@{activity('GetSourceMax1').output.firstRow.timestamp}' as source_max,\n'@{activity('GetTableMetadata').output.firstRow.max_timestamp}' as current_max,\n'@{activity('GetTableMetadata').output.firstRow.system_db_schema}' as system_db_schema\n;\nSELECT * FROM [adf_metastore].[tst].[testing_parameters]\nWHERE run_id='@{pipeline().RunId}'\n",
-										"type": "Expression"
-									},
-									"partitionOption": "None"
-								},
-								"dataset": {
-									"referenceName": "Metastore",
-									"type": "DatasetReference",
-									"parameters": {
-										"table_name": "pipeline_log"
-									}
-								}
-							}
-						},
-						{
-							"name": "GetSourceMax1",
-							"type": "Lookup",
+							"name": "ExecuteCopyActivity",
+							"type": "ExecutePipeline",
 							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
 							"userProperties": [],
 							"typeProperties": {
-								"source": {
-									"type": "SqlServerSource",
-									"sqlReaderQuery": {
-										"value": "SELECT COALESCE(max(@{activity('GetTableMetadata').output.firstRow.delta_column}), '@{activity('GetTableMetadata').output.firstRow.max_timestamp}' ) timestamp\nFROM @{activity('GetTableMetadata').output.firstRow.system_db}.@{activity('GetTableMetadata').output.firstRow.system_db_schema}.@{activity('GetTableMetadata').output.firstRow.src_table_name}",
+								"pipeline": {
+									"referenceName": "incr_load_to_syn",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"date": {
+										"value": "@variables('date')",
 										"type": "Expression"
 									},
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
-								},
-								"dataset": {
-									"referenceName": "testSqlServer",
-									"type": "DatasetReference"
+									"source": {
+										"value": "@pipeline().parameters.source",
+										"type": "Expression"
+									},
+									"table_name": {
+										"value": "@pipeline().parameters.table_name",
+										"type": "Expression"
+									},
+									"MasterRunID": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"country_name": {
+										"value": "@activity('GetTableMetadata').output.firstRow.country_name",
+										"type": "Expression"
+									}
 								}
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "TransientToRawToTrusted",
+				"description": "This activity will move data from transient and transform before persisting it on raw/trusted/shield zones respectively",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "SwitchSourceToTransient",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "transient_to_raw_to_trusted",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"date": {
+							"value": "@variables('date')",
+							"type": "Expression"
+						},
+						"source": {
+							"value": "@pipeline().parameters.source",
+							"type": "Expression"
+						},
+						"table_name": {
+							"value": "@pipeline().parameters.table_name",
+							"type": "Expression"
+						},
+						"MasterRunID": {
+							"value": "@pipeline().RunId",
+							"type": "Expression"
+						},
+						"catchup": {
+							"value": "@pipeline().parameters.catchup",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
@@ -820,6 +721,14 @@
 			"iterator_run_id": {
 				"type": "string",
 				"defaultValue": "cs_sit_0929"
+			},
+			"load_synapse": {
+				"type": "string",
+				"defaultValue": "0"
+			},
+			"catchup": {
+				"type": "string",
+				"defaultValue": "false"
 			}
 		},
 		"variables": {

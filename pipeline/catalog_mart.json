@@ -44,7 +44,11 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"TABLE_NAME": "INFORMATION_SCHEMA.TABLES",
-							"SCHEMA_NAME": "dbo"
+							"SCHEMA_NAME": "dbo",
+							"dw_db_name": {
+								"value": "@pipeline().globalParameters.dw_db_name",
+								"type": "Expression"
+							}
 						}
 					}
 				],
@@ -108,7 +112,11 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"TABLE_NAME": "INFORMATION_SCHEMA.TABLES",
-							"SCHEMA_NAME": "dbo"
+							"SCHEMA_NAME": "dbo",
+							"dw_db_name": {
+								"value": "@pipeline().globalParameters.dw_db_name",
+								"type": "Expression"
+							}
 						}
 					}
 				],

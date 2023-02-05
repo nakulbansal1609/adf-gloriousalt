@@ -17,6 +17,10 @@
 						"MasterRunID": {
 							"value": "@pipeline().RunId",
 							"type": "Expression"
+						},
+						"load_synapse": {
+							"value": "@pipeline().parameters.load_synapse",
+							"type": "Expression"
 						}
 					}
 				}
@@ -42,6 +46,10 @@
 					"parameters": {
 						"MasterRunID": {
 							"value": "@pipeline().RunId",
+							"type": "Expression"
+						},
+						"load_synapse": {
+							"value": "@pipeline().parameters.load_synapse",
 							"type": "Expression"
 						}
 					}
@@ -69,11 +77,21 @@
 						"MasterRunID": {
 							"value": "@pipeline().RunId",
 							"type": "Expression"
+						},
+						"load_synapse": {
+							"value": "@pipeline().parameters.load_synapse",
+							"type": "Expression"
 						}
 					}
 				}
 			}
 		],
+		"parameters": {
+			"load_synapse": {
+				"type": "int",
+				"defaultValue": 0
+			}
+		},
 		"folder": {
 			"name": "Caelum_Pipelines/data_warehouse/data vault/raw vault"
 		},

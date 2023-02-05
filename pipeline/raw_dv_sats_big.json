@@ -1,5 +1,5 @@
 {
-	"name": "raw_dv_sats",
+	"name": "raw_dv_sats_big",
 	"properties": {
 		"activities": [
 			{
@@ -18,7 +18,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "SELECT sm.SOURCE_TABLE,\n       s.SCHEMA_NAME,\n       s.SAT_NAME AS VAULT_TABLE,\n       coalesce(hm.PK_LIST, lm.PK_LIST) AS PARENT_PK_LIST,\n       coalesce(h.HUB_NAME, l.LINK_NAME) AS PARENT_NAME,\n       sm.RECORD_SOURCE,\n       sm.SAT_ID,\n       sp.PARENT_TYPE,\n       CASE\n           WHEN sp.PARENT_TYPE = 'HUB' THEN sp.HUB_ID\n           ELSE sp.LINK_ID\n       END AS parent_id,\n       CASE\n           WHEN @{pipeline().parameters.load_synapse}=1 THEN REPLACE(sm.SOURCE_SCHEMA, 'EXT_', 'INT_')\n           ELSE sm.SOURCE_SCHEMA\n       END AS SOURCE_SCHEMA\nFROM adf_metastore.dv.dv_sat_map sm\nJOIN adf_metastore.dv.dv_satellites s ON sm.SAT_ID = s.SAT_ID\nJOIN adf_metastore.dv.dv_satellite_parents sp ON s.PARENT_SAT_ID = sp.PARENT_SAT_ID\nLEFT JOIN adf_metastore.dv.dv_hubs h ON sp.HUB_ID = h.HUB_ID\nLEFT JOIN adf_metastore.dv.dv_links l ON sp.LINK_ID = l.LINK_ID\nLEFT JOIN adf_metastore.dv.dv_hub_map hm ON h.HUB_ID = hm.HUB_ID\nLEFT JOIN adf_metastore.dv.dv_link_map lm ON l.LINK_ID = lm.LINK_ID\n",
+							"value": "SELECT sm.SOURCE_TABLE,\n       s.SCHEMA_NAME,\n       s.SAT_NAME AS VAULT_TABLE,\n       coalesce(hm.PK_LIST, lm.PK_LIST) AS PARENT_PK_LIST,\n       coalesce(h.HUB_NAME, l.LINK_NAME) AS PARENT_NAME,\n       sm.RECORD_SOURCE,\n       sm.SAT_ID,\n       sp.PARENT_TYPE,\n       CASE\n           WHEN sp.PARENT_TYPE = 'HUB' THEN sp.HUB_ID\n           ELSE sp.LINK_ID\n       END AS parent_id,\n       CASE\n           WHEN @{pipeline().parameters.load_synapse}=1 THEN REPLACE(sm.SOURCE_SCHEMA, 'EXT_', 'INT_')\n           ELSE sm.SOURCE_SCHEMA\n       END AS SOURCE_SCHEMA\nFROM adf_metastore.dv.dv_sat_map sm\nJOIN adf_metastore.dv.dv_satellites s ON sm.SAT_ID = s.SAT_ID\nJOIN adf_metastore.dv.dv_satellite_parents sp ON s.PARENT_SAT_ID = sp.PARENT_SAT_ID\nLEFT JOIN adf_metastore.dv.dv_hubs h ON sp.HUB_ID = h.HUB_ID\nLEFT JOIN adf_metastore.dv.dv_links l ON sp.LINK_ID = l.LINK_ID\nLEFT JOIN adf_metastore.dv.dv_hub_map hm ON h.HUB_ID = hm.HUB_ID\nLEFT JOIN adf_metastore.dv.dv_link_map lm ON l.LINK_ID = lm.LINK_ID\nwhere s.SAT_NAME = 'ST_niAkt_Nova'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -98,7 +98,7 @@
 									},
 									"source_schema": {
 										"value": {
-											"value": "@item().SOURCE_SCHEMA",
+											"value": "staging",
 											"type": "Expression"
 										},
 										"type": "String"
@@ -201,8 +201,10 @@
 			}
 		},
 		"folder": {
-			"name": "Caelum_Pipelines/data_warehouse/data vault/raw vault"
+			"name": "Caelum_Pipelines/data_warehouse/data vault/raw vault/big_tbl"
 		},
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2022-02-04T10:41:58Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }

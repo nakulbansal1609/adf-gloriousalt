@@ -63,10 +63,19 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"notebookPath": "/Users/ext-dragos.florian.brato@lowell.com/test_client_exclusion",
+								"notebookPath": {
+									"value": "@concat(if(equals(pipeline().globalParameters.environment,'dev'),'/Repos/caelum/lowell.caelum.cdp.databricks/','/caelum/'),'automation-testing/test_client_exclusion')\n",
+									"type": "Expression"
+								},
 								"baseParameters": {
-									"table_name": "@item().table_name",
-									"source": "@item().source",
+									"table_name": {
+										"value": "@item().table_name",
+										"type": "Expression"
+									},
+									"source": {
+										"value": "@item().source",
+										"type": "Expression"
+									},
 									"run_id": {
 										"value": "@pipeline().RunId",
 										"type": "Expression"
@@ -75,7 +84,7 @@
 								}
 							},
 							"linkedServiceName": {
-								"referenceName": "AzureDatabricks1",
+								"referenceName": "databricks_cs",
 								"type": "LinkedServiceReference"
 							}
 						}
@@ -84,7 +93,7 @@
 			}
 		],
 		"folder": {
-			"name": "Testing_Pipelines"
+			"name": "Testing_Pipelines/testingPipelines"
 		},
 		"annotations": []
 	}

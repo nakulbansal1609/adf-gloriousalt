@@ -43,7 +43,12 @@
 						"referenceName": "data_vault_db",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLE_NAME": "INFORMATION_SCHEMA.TABLES"
+							"TABLE_NAME": "INFORMATION_SCHEMA.TABLES",
+							"SCHEMA_NAME": "dbo",
+							"dw_db_name": {
+								"value": "@pipeline().globalParameters.dw_db_name",
+								"type": "Expression"
+							}
 						}
 					}
 				],
@@ -106,7 +111,12 @@
 						"referenceName": "data_vault_db",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLE_NAME": "INFORMATION_SCHEMA.TABLES"
+							"TABLE_NAME": "INFORMATION_SCHEMA.TABLES",
+							"SCHEMA_NAME": "dbo",
+							"dw_db_name": {
+								"value": "@pipeline().globalParameters.dw_db_name",
+								"type": "Expression"
+							}
 						}
 					}
 				],

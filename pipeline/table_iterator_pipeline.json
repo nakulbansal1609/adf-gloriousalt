@@ -140,6 +140,88 @@
 					},
 					"firstRowOnly": false
 				}
+			},
+			{
+				"name": "CheckExecutionStatus",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "TableIngestion",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "SELECT COUNT(*) AS failed_runs FROM [dbo].[pipeline_log] pl\nJOIN dbo.table_list tl \nON pl.table_name = tl.table_name \nWHERE tl.source_id IN (1, 6, 8)\nAND pl.EXECUTION_STATUS='Failed'\nAND run_id='@{pipeline().RunId}'",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "Metastore",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": "''"
+						}
+					}
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "CheckExecutionStatus",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@greater(int(activity('CheckExecutionStatus').output.firstRow.failed_runs), 0)\n",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Notebook1",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": {
+									"value": "@concat(if(equals(pipeline().globalParameters.environment,'dev'),'/Repos/caelum/lowell.caelum.cdp.databricks/','/caelum/'),'main_triggered_after_data_ingestion')\n",
+									"type": "Expression"
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "databricks_cs",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
 			}
 		],
 		"variables": {

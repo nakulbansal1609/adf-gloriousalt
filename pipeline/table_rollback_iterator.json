@@ -33,7 +33,10 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"source": "NOVA",
+									"source": {
+										"value": "@pipeline().parameters.source",
+										"type": "Expression"
+									},
 									"table_name": {
 										"value": "@item().table_name",
 										"type": "Expression"
@@ -59,7 +62,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT table_name\nFROM [adf_metastore].[dbo].[table_list]\nWHERE active_flag=1",
+						"sqlReaderQuery": {
+							"value": "SELECT table_name \nFROM dbo.table_list\nJOIN dbo.sources\nON table_list.source_id = sources.source_id\nWHERE sources.source_name = '@{pipeline().parameters.source}'",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

@@ -48,11 +48,8 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "synwlwcaelumdevdw_private",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"database_name": "synlwcaelumdevdwsql"
-					}
+					"referenceName": "shield_db",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],

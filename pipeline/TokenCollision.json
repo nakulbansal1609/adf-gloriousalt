@@ -133,10 +133,13 @@
 								}
 							},
 							"linkedServiceName": {
-								"referenceName": "synwlwcaelumdevdw_private",
+								"referenceName": "shield_db",
 								"type": "LinkedServiceReference",
 								"parameters": {
-									"database_name": "synlwcaelumdevdwsql"
+									"database_name": {
+										"value": "@pipeline().globalParameters.shield_db_name",
+										"type": "Expression"
+									}
 								}
 							}
 						}
