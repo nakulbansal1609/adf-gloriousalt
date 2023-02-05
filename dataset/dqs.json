@@ -2,7 +2,7 @@
 	"name": "dqs",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dlalwcaelumdevdw01",
+			"referenceName": "datalake",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {

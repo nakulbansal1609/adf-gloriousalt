@@ -2,10 +2,11 @@
 	"name": "SqlServerTableTest",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LWSQLDEV075",
+			"referenceName": "sql_server",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"database": "Obfuscated_ODS"
+				"database": "master",
+				"server_path": "LWSQLDEV075"
 			}
 		},
 		"annotations": [],

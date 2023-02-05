@@ -1,5 +1,5 @@
 {
-	"name": "caelum_data_lake_table_lvl",
+	"name": "caelum_data_lake_filter",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "datalake",
@@ -27,8 +27,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "*.parquet",
 				"folderPath": {
-					"value": "@concat('dw_data_store/',dataset().zone,'/',dataset().country,'/',dataset().source,'/',dataset().table)",
+					"value": "@concat('dw_data_store/',dataset().zone,'/',dataset().country,'/',dataset().source,'/',dataset().table,'/*/*/*')",
 					"type": "Expression"
 				},
 				"fileSystem": {

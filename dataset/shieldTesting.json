@@ -2,8 +2,16 @@
 	"name": "shieldTesting",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dlalwcaelumdevdw01",
+			"referenceName": "datalake",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"adls_dw_container_name": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
 		},
 		"folder": {
 			"name": "Testing_Datasets"
@@ -13,9 +21,15 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "queries.csv",
+				"fileName": {
+					"value": "@concat(dataset().file_name, '.csv')",
+					"type": "Expression"
+				},
 				"folderPath": "testing/shield_testing",
-				"fileSystem": "fs01-dlalwcaelumdevdw01"
+				"fileSystem": {
+					"value": "@dataset().adls_dw_container_name",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": "\t",
 			"escapeChar": "\\",

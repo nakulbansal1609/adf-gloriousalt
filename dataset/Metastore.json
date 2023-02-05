@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "This is the dataset for Azure SQL DB ",
 		"linkedServiceName": {
-			"referenceName": "adf_metastore",
+			"referenceName": "metastore",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {

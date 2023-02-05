@@ -1,37 +1,44 @@
 {
-	"name": "Shield_rt",
+	"name": "parameterized_source",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "shield_db",
+			"referenceName": "sql_server",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"database_name": {
-					"value": "@dataset().shield_db_name",
+				"database": {
+					"value": "@dataset().database_name",
+					"type": "Expression"
+				},
+				"server_path": {
+					"value": "@dataset().server_path",
 					"type": "Expression"
 				}
 			}
 		},
 		"parameters": {
-			"TABLE_NAME": {
+			"schema": {
 				"type": "string"
 			},
-			"db_schema": {
+			"table_name": {
 				"type": "string"
 			},
-			"shield_db_name": {
+			"server_path": {
+				"type": "string"
+			},
+			"database_name": {
 				"type": "string"
 			}
 		},
 		"annotations": [],
-		"type": "AzureSqlDWTable",
+		"type": "SqlServerTable",
 		"schema": [],
 		"typeProperties": {
 			"schema": {
-				"value": "@dataset().db_schema",
+				"value": "@dataset().schema",
 				"type": "Expression"
 			},
 			"table": {
-				"value": "@dataset().TABLE_NAME",
+				"value": "@dataset().table_name",
 				"type": "Expression"
 			}
 		}

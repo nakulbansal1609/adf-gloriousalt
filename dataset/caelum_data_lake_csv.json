@@ -2,7 +2,7 @@
 	"name": "caelum_data_lake_csv",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dlalwcaelumdevdw01",
+			"referenceName": "datalake",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -29,6 +29,9 @@
 			},
 			"file_timestamp": {
 				"type": "string"
+			},
+			"adls_dw_container_name": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -44,7 +47,10 @@
 					"value": "@concat('dw_data_store/',dataset().zone,'/',dataset().country,'/',dataset().source,'/',dataset().table,'/',dataset().year,'/',dataset().month,'/',dataset().day,'/csv')",
 					"type": "Expression"
 				},
-				"fileSystem": "fs01-dlalwcaelumdevdw01"
+				"fileSystem": {
+					"value": "@dataset().adls_dw_container_name",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\"",
